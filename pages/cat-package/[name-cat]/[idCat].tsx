@@ -9,6 +9,7 @@ import styles from './index.module.scss';
 import cn from 'classnames/bind';
 import ListPackage from '@/components/common/listPackage';
 import Head from 'next/head';
+import { API_URL_ORIGIN } from '@/api/api-origin';
 const cx = cn.bind(styles);
 
 export interface CategoryPageProps {
@@ -106,7 +107,8 @@ export const getStaticProps: GetStaticProps<CategoryPageProps> = async (
     let cat;
 
     try {
-        const res = await axios.get(`http://localhost:5000/api/catPackage/${idCat}`);
+        // const res = await axios.get(`http://localhost:5000/api/catPackage/${idCat}`);
+        const res = await axios.get(`${API_URL_ORIGIN}api/catPackage/${idCat}`);
         const data = res.data;
         if (data.success) {
             cat = data.catPackage;

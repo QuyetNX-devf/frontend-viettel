@@ -25,8 +25,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<any>) 
         req.headers.cookies = '';
 
         proxy.web(req, res, {
-            // target: process.env.API_URL,
-            target: 'https://backend-viettel.herokuapp.com/',
+            target: process.env.API_URL,
+            // target: 'https://backend-viettel.herokuapp.com/',
             changeOrigin: true,
             selfHandleResponse: false,
         });
