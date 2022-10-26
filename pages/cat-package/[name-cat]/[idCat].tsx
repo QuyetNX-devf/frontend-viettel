@@ -76,7 +76,7 @@ CategoryPage.Layout = MainLayout;
 export const getStaticPaths: GetStaticPaths = async () => {
     let newPaths;
     try {
-        const res = await axios.get(`http://localhost:5000/api/catPackage/allCat`);
+        const res = await axios.get(`${API_URL_ORIGIN}/catPackage/allCat`);
         const data = res.data;
         newPaths = data.catPackage.map((cat: any) => {
             return {
@@ -108,7 +108,7 @@ export const getStaticProps: GetStaticProps<CategoryPageProps> = async (
 
     try {
         // const res = await axios.get(`http://localhost:5000/api/catPackage/${idCat}`);
-        const res = await axios.get(`${API_URL_ORIGIN}api/catPackage/${idCat}`);
+        const res = await axios.get(`${API_URL_ORIGIN}/catPackage/${idCat}`);
         const data = res.data;
         if (data.success) {
             cat = data.catPackage;
