@@ -1,0 +1,57 @@
+@import "@/styles/_mixins.scss";
+
+.box-cat{
+    margin-bottom: 35px;
+    @include mediaMaxWidth(480px){
+        margin-bottom: 20px;
+    }
+    .box-wrap-title{
+        display: flex;
+        justify-content: space-between;
+        border-bottom: solid 2px #ee0033;
+        align-items: center;
+        margin-bottom: 15px;
+        .title{
+            font-size: 20px;
+            font-weight: 500;
+            text-transform: uppercase;
+            background: #ee0033;
+            color: #fff;
+            padding: 5px 10px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+            @include mediaMaxWidth(768px){
+                font-size: 16px;
+            }
+            @include mediaMaxWidth(480px){
+                font-size: 14px;
+            }
+        }
+
+    }
+    :global {
+        .swiper-button-next{
+            background: rgba(0, 0, 0, 0.425);
+            padding: 10px;
+            right: 0;
+            border-bottom-left-radius: 5px;
+            border-top-left-radius: 5px;
+            &::after{
+                font-size: 24px;
+                font-weight: bold;
+                color: #e03;
+            }
+        }
+        .swiper-button-prev{
+            background: rgba(0, 0, 0, 0.425);
+            left: 0;
+            border-bottom-right-radius: 5px;
+            border-top-right-radius: 5px;
+            &::after{
+                font-size: 24px;
+                font-weight: bold;
+                color: #e03;
+            }
+        }
+    }
+}

@@ -1,0 +1,74 @@
+import React, { useEffect, useState } from 'react';
+import { AdminLayout } from '@/components/layout';
+import { Container as MuiContainer, Typography, Grid, Box } from '@mui/material';
+import useSWR from 'swr';
+import _ from 'lodash';
+import { catPackageApi } from '@/api/cat-data-api';
+import { Container, Draggable } from 'react-smooth-dnd';
+import ColumCat from '@/components/BoardMainAdmin/columns-cat';
+import { mapOder } from '@/utils/sort';
+
+type Props = {};
+
+const LoginAdminPage = (props: Props) => {
+    const [board, setBoard] = useState({});
+    const [columnCats, setColumnCats] = useState([]);
+    const {
+        data: dataFullBoard,
+        error,
+        mutate,
+    } = useSWR('/fullBoard', {
+        dedupingInterval: 60 * 60 * 1000,
+        revalidateOnFocus: false,
+    });
+
+    console.log(board);
+
+    useEffect(() => {
+        if (dataFullBoard) {
+            setBoard(dataFullBoard.fullBoard);
+            setColumnCats(
+                mapOder(
+                    dataFullBoard.fullBoard.Categorys,
+                    dataFullBoard.fullBoard.CatIdOrder,
+                    '_id'
+                )
+            );
+        }
+    }, [dataFullBoard]);
+
+    const onColumnDrop = async (dropResult: any) => {
+        console.log(dropResult);
+    };
+
+    if (_.isEmpty(board)) {
+        return <Box>Not Board</Box>;
+    }
+    return (
+        <>
+            <MuiContainer>
+                <Typography margin={'20px 0'} borderBottom={'solid 1px'} variant="h5">
+                    Kéo thảnh nhanh:
+                </Typography>
+                <Container
+                    orientation="horizontal"
+                    onDrop={onColumnDrop}
+                    // dragHandleSelector=".column-drag-handle"
+                    dropPlaceholder={{
+                        showOnTop: true,
+                        className: 'cards-drop-preview',
+                    }}
+                >
+                    {columnCats.map((columnCat: any) => (
+                        <Draggable key={columnCat._id}>
+                            <ColumCat columnCat={columnCat} />
+                        </Draggable>
+                    ))}
+                </Container>
+            </MuiContainer>
+        </>
+    );
+};
+
+LoginAdminPage.Layout = AdminLayout;
+export default LoginAdminPage;

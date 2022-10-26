@@ -1,0 +1,46 @@
+.header{
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+}
+.navbar{
+    position: fixed;
+    top: 56px;
+    left: 0;
+    width: 300px;
+    background: #ee0033;
+    height: calc(100vh - 56px);
+    padding: 15px 15px;
+    transition: all 0.2s;
+    transform: translateX(-100%);
+    z-index: 999;
+    padding-top: 20px;
+    &.active{
+        transform: translateX(0);
+    }
+    .wrapnav{
+        .link{
+            display: block;
+            color: #fff;
+            padding: 5px;
+            border-bottom:solid 1px #fff;
+        }
+    }
+}
+.blur{
+    position: fixed;
+    top: 56px;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #00000030;
+    z-index: 99;
+    transition: all 0.2s;
+    opacity: 0;
+    visibility: hidden;
+    &.active{
+        opacity: 1;
+        visibility: visible;
+    }
+}
