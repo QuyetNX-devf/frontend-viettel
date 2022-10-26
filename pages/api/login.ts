@@ -57,7 +57,8 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<any>) 
         proxy.once('proxyRes', handleLoginResponse);
 
         proxy.web(req, res, {
-            target: process.env.API_URL,
+            // target: process.env.API_URL,
+            target: 'https://backend-viettel.herokuapp.com/',
             changeOrigin: true,
             selfHandleResponse: true,
         });
