@@ -37,7 +37,12 @@ export default function CategoryPage({ cat }: CategoryPageProps) {
                     name="keywords"
                     content="Khuyến mại Data 3G/4G, Combo gọi thoại, SMS và các dịch vụ nội dung đặc sắc từ Viettel"
                 />
-                <meta name="og:url" content="/" />
+                <meta
+                    name="og:url"
+                    content={`https://frontend-viettel.vercel.app/cat-package/${ToSlug(
+                        cat.nameCatPackge
+                    )}/${cat._id}`}
+                />
                 <meta
                     name="og:site_name"
                     content="Cổng thông tin chính thức về dịch vụ của Viettel Telecom"

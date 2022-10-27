@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { MainLayout } from '@/components/layout';
 import { Box, Button, Container } from '@mui/material';
-import type { NextPage } from 'next';
+import type { GetStaticProps, NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 // import Image from 'next/future/image';
@@ -15,9 +15,19 @@ import useSWR from 'swr';
 import CatMain from '@/components/Cat-main';
 import Service from '@/components/service';
 import { useRef } from 'react';
+import { API_URL_ORIGIN } from '@/api/api-origin';
+import axios from 'axios';
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 const cx = cn.bind(styles);
 
-const Home: NextPageWithLayout = () => {
+// export interface HomePageProps {
+//     dataCat: any;
+// }
+
+const Home: NextPageWithLayout = (props) => {
+    const isSmallerScreen = useMediaQuery('(max-width: 768px)');
+    const dataCat = (props as any).dataCat;
     const router = useRouter();
 
     const scrollRef1 = useRef(null);
@@ -37,20 +47,8 @@ const Home: NextPageWithLayout = () => {
         (allRef as any)[`scrollRef${index}`].current.scrollIntoView({
             behavior: 'smooth',
         });
-        console.log(scrollRef5.current);
     };
 
-    function goToDetailPage() {
-        router.push({
-            pathname: '/posts',
-        });
-    }
-
-    const { data: dataCat } = useSWR('/catPackage/allCat', {
-        revalidateOnFocus: false,
-        dedupingInterval: 60 * 60 * 1000,
-    });
-    console.log(dataCat);
     return (
         <Box>
             <Head>
@@ -63,7 +61,7 @@ const Home: NextPageWithLayout = () => {
                     name="keywords"
                     content="Khuyến mại Data 3G/4G, Combo gọi thoại, SMS và các dịch vụ nội dung đặc sắc từ Viettel"
                 />
-                <meta name="og:url" content="/" />
+                <meta name="og:url" content="https://frontend-viettel.vercel.app/" />
                 <meta
                     name="og:site_name"
                     content="Cổng thông tin chính thức về dịch vụ của Viettel Telecom"
@@ -84,10 +82,17 @@ const Home: NextPageWithLayout = () => {
                 ></meta>
                 <meta name="og:image" content="/telecom.jpg"></meta>
             </Head>
+
             <Box>
-                <Box className={styles.banner}>
-                    <img src="/img/banner.jpg" alt="img" />
-                </Box>
+                {isSmallerScreen ? (
+                    <Box className={styles.banner}>
+                        <img src="/img/banner-mobile.jpg" alt="img" />
+                    </Box>
+                ) : (
+                    <Box className={styles.banner}>
+                        <img src="/img/banner.jpg" alt="img" />
+                    </Box>
+                )}
                 <Box>
                     <Container>
                         <CartCategory onScroll={handleClickScroll} />
@@ -109,5 +114,21 @@ const Home: NextPageWithLayout = () => {
 };
 
 Home.Layout = MainLayout;
-
 export default Home;
+
+export const getStaticProps: GetStaticProps = async () => {
+    let data;
+    try {
+        const res = await axios.get(`${API_URL_ORIGIN}/catPackage/allCat`);
+        data = res.data;
+    } catch (error) {
+        data = null;
+    }
+
+    return {
+        props: {
+            dataCat: data,
+        },
+        revalidate: 5,
+    };
+};
