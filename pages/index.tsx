@@ -129,6 +129,6 @@ export const getStaticProps: GetStaticProps = async () => {
         props: {
             dataCat: data,
         },
-        revalidate: 5,
+        // revalidate: 5,
     };
 };

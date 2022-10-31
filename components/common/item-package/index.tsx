@@ -82,7 +82,7 @@ export default function PackageItem({ data }: PackageItemProps) {
                                     <Typography fontWeight={'bold'} component={'span'}>
                                         Đăng ký:{' '}
                                     </Typography>
-                                    Bấm Đăng ký bên dưới hoặc xoạn tin
+                                    Bấm Đăng ký bên dưới hoặc soạn tin
                                 </Typography>
                                 <Typography className={cx('text-syntax')} textAlign={'center'}>
                                     <Typography className={cx('text-red')} component={'span'}>

@@ -35,7 +35,9 @@ export default function CatMain({ dataCat }: CatMainProps) {
         <Box>
             <Box className={cx('box-cat')} ref={ref}>
                 <Box className={cx('box-wrap-title')}>
-                    <Typography className={cx('title')}>{dataCat.nameCatPackge}</Typography>
+                    <Typography component={'h2'} className={cx('title')}>
+                        {dataCat.nameCatPackge}
+                    </Typography>
                     <Link href={`/cat-package/${ToSlug(dataCat.nameCatPackge)}/${dataCat._id}`}>
                         <a className={cx('more')}>Xem tất cả +</a>
                     </Link>
